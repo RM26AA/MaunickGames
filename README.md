@@ -1,11 +1,106 @@
-# Sample Snack app
+# 🎮 MaunickGames
 
-Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!
+**MaunickGames** is a React Native app that helps users explore top-rated, upcoming, and categorized video games. It includes an intuitive UI, game detail views, image-based search via Cloudinary + Imagga API, and a contact form for user feedback.
 
-When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).
+---
 
-All projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.
+## 📱 Features
 
-If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).
+- 🔍 **Browse by Category**: Action, Indie, Strategy — with card previews.
+- 🔡 **A-Z Filter**: Clickable alphabet list to filter games by title.
+- ⭐ **Top Rated Games**: Explore the highest-rated games from the RAWG API.
+- ⏳ **Upcoming Games**: View a list of future game releases.
+- 📷 **Image Upload & Search**: Upload a game cover and use image recognition to identify it.
+- 📩 **Contact Form**: Full name, email, phone, and message with validation.
+- 💅 Clean dark UI design with consistent layout and SafeArea handling.
 
-Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).
+---
+
+## 🚀 Tech Stack
+
+- **React Native** (with Expo)
+- **RAWG API** for game data
+- **Cloudinary** for image uploads
+- **Imagga API** for image recognition/tagging
+- **Firebase** (optional for future data storage)
+- **Axios** for HTTP requests
+
+---
+
+## 🖼 Screens
+
+- HomeScreen
+- CategoriesScreen
+- TopRatedScreen
+- UpcomingScreen
+- GameDetailScreen
+- ContactScreen
+
+### 🔑 RAWG API
+
+```
+https://rawg.io/apidocs
+```
+
+## 📁 Folder Structure
+
+```
+MaunickGames/
+├── assets/
+│ └── logo1.png
+├── components/
+│ └── GameCard.js
+├── screens/
+│ ├── HomeScreen.js
+│ ├── CategoriesScreen.js
+│ ├── TopRatedScreen.js
+│ ├── UpcomingScreen.js
+│ ├── GameDetailScreen.js
+│ └── ContactScreen.js
+├── App.js
+└── README.md
+```
+
+## 📲 Installation
+
+```
+# Install Expo CLI
+npm install -g expo-cli
+
+# Clone the project
+git clone https://github.com/your-username/MaunickGames.git
+
+# Navigate into the directory
+cd MaunickGames
+
+# Install dependencies
+npm install
+
+# Start the app
+expo start
+```
+
+## 📬 Contact
+
+For questions or feature requests, use the Contact form in the app or open an issue on GitHub.
+
+## Expo Link
+
+- https://snack.expo.dev/@romeo260/maunick_games_3_linkedin
+
+## 📄 License
+MIT License © 2025 [R.Maunick / MaunickGames]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
