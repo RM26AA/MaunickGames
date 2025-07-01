@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game Details</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<!-- Screenshot Modal -->
+<div id="screenshotModal" class="modal hidden">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <img id="modalImage" src="" alt="Screenshot" />
+</div>
+
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <a href="index.html"><img src="logo1.png" alt="Logo" class="logo-img" /></a>
+    </div>
+  </nav>
+
+  <!-- Game Detail -->
+  <main id="gameDetail" class="game-detail-container">
+    <p>Loading...</p>
+  </main>
+
+  <!-- Screenshot Modal -->
+  <div id="screenshotModal" class="modal hidden">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage" />
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Maunick Games. All rights reserved.</p>
+    <p>All game data and images are provided by the RAWG Video Games Database API.<br>
+    This website is not affiliated with or endorsed by RAWG.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </footer>
+
+  <script src="game.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
+

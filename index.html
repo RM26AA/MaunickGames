@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maunick Games</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script> <!-- Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo-link">
+      <img src="logo1.png" alt="Maunick Games Logo" class="logo-img" />
+    </a>
+    <ul class="nav-links">
+      <li><i data-lucide="home"></i><a href="index.html">Home</a></li>
+      <li><i data-lucide="layout-grid"></i><a href="categories.html">Categories</a></li>
+      <li><i data-lucide="star"></i><a href="top-rated.html">Top Rated</a></li>
+      <li><i data-lucide="calendar-days"></i><a href="upcoming.html">Upcoming</a></li>
+      <li><i data-lucide="mail"></i><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>Discover Amazing Games</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search for a game..." />
+      <button onclick="searchGames()" id="searchBtn">
+        <i data-lucide="search"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Game List -->
+  <main>
+    <section id="gameList" class="grid"></section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Maunick Games. All rights reserved.</p>
+    <p>All game data and images are provided by the RAWG Video Games Database API.<br>
+    This website is not affiliated with or endorsed by RAWG.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
+
+

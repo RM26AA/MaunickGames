@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Top Rated Games</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="logo-link">
+      <img src="logo1.png" alt="Maunick Games Logo" class="logo-img" />
+    </a>
+    <ul class="nav-links">
+      <li><i data-lucide="home"></i><a href="index.html">Home</a></li>
+      <li><i data-lucide="layout-grid"></i><a href="categories.html">Categories</a></li>
+      <li><i data-lucide="star"></i><a href="top-rated.html">Top Rated</a></li>
+      <li><i data-lucide="calendar-days"></i><a href="upcoming.html">Upcoming</a></li>
+      <li><i data-lucide="mail"></i><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="hero">
+    <h1>Top Rated Games</h1>
+    <p>Explore the highest-rated games of all time</p>
+  </section>
+
+  <!-- Game Grid -->
+  <main>
+    <section id="topRatedGames" class="grid"></section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Maunick Games. All rights reserved.</p>
+    <p>All game data and images are provided by the RAWG Video Games Database API.<br>
+    This website is not affiliated with or endorsed by RAWG.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </footer>
+
+  <script src="top-rated.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
