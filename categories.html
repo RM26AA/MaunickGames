@@ -1,58 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Game Categories</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://unpkg.com/lucide@latest"></script>
+
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="assets/logo2.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MAUNICK GAMES - Categories</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* App Container */
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Content Scroll Area */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding-bottom: 90px; /* Space for bottom navigation */
+        }
+
+        /* Header */
+        .header {
+            align-items: center;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .logo {
+            width: 170px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .title {
+            color: #fff;
+            font-size: 26px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Alphabet Wrapper */
+        .alphabet-wrapper {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #1a1a1a;
+            border-top: 1px solid #1a1a1a;
+            background-color: #0a0a0a;
+        }
+
+        .alphabet-container {
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .alphabet-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .letter-button {
+            padding: 6px 12px;
+            border-radius: 20px;
+            background-color: #222;
+            border: none;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background-color 0.2s;
+        }
+
+        .letter-button.active {
+            background-color: #e91e63;
+        }
+
+        .letter-text {
+            color: #aaa;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .letter-button.active .letter-text {
+            color: #fff;
+        }
+
+        /* Category Row */
+        .category-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px;
+            gap: 10px;
+        }
+
+        .small-card {
+            width: 105px;
+            height: 105px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #111;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .small-card:active {
+            transform: scale(0.95);
+        }
+
+        .small-card.active {
+            border-color: #e91e63;
+        }
+
+        .small-image {
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+            background-color: #222;
+        }
+
+        .small-card-text {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 6px;
+        }
+
+        /* Results Section */
+        .section-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 16px;
+        }
+
+        .games-list {
+            padding: 0 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .vertical-card {
+            background-color: #121212;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .vertical-card:active {
+            transform: scale(0.98);
+        }
+
+        .vertical-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            background-color: #222;
+            border-radius: 10px;
+        }
+
+        .card-title {
+            color: #fff;
+            font-size: 16px;
+            margin-top: 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .placeholder-text {
+            color: #666;
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: #0d0d0d;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #222;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #888;
+            flex: 1;
+            height: 100%;
+            transition: color 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+        }
+
+        .nav-item.active {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <a href="index.html" class="logo-link">
-      <img src="logo1.png" alt="Maunick Games Logo" class="logo-img" />
-    </a>
-    <ul class="nav-links">
-      <li><i data-lucide="home"></i><a href="index.html">Home</a></li>
-      <li><i data-lucide="layout-grid"></i><a href="categories.html">Categories</a></li>
-      <li><i data-lucide="star"></i><a href="top-rated.html">Top Rated</a></li>
-      <li><i data-lucide="calendar-days"></i><a href="upcoming.html">Upcoming</a></li>
-      <li><i data-lucide="mail"></i><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
 
-  <!-- Alphabet Filter -->
-  <section class="alphabet-filter">
-    <h1>Browse by Alphabet</h1>
-    <div class="letters">
-      <!-- JS will fill this -->
+    <div id="app-container">
+        <!-- Content Scroll Area -->
+        <div class="content-area">
+            <!-- Header -->
+            <div class="header">
+                <img src="assets/logo1.png" alt="MAUNICK GAMES" class="logo" onerror="this.style.display='none';" />
+                <h1 class="title">Categories</h1>
+            </div>
+
+            <!-- A-Z Index Bar -->
+            <div class="alphabet-wrapper">
+                <div class="alphabet-container" id="alphabet-container">
+                    <!-- Populated via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Category Cards Row -->
+            <div class="category-row" id="category-row">
+                <!-- Populated via JavaScript -->
+            </div>
+
+            <!-- Results Section Title -->
+            <div id="section-title" class="section-title">Select a category or letter</div>
+
+            <!-- Games List -->
+            <div id="games-list" class="games-list">
+                <div class="placeholder-text">Choose an option above to explore games.</div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="categories.html" class="nav-item active">
+                <i class="fa-solid fa-grip"></i>
+                <span>Categories</span>
+            </a>
+            <a href="top-rated.html" class="nav-item">
+                <i class="fa-solid fa-star"></i>
+                <span>Top Rated</span>
+            </a>
+            <a href="upcoming.html" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Upcoming</span>
+            </a>
+            <a href="contact.html" class="nav-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </nav>
     </div>
-  </section>
-  
-  <!-- Genre Cards -->
-  <section class="genre-section">
-  <h2>Explore Popular Genres</h2>
-  <div class="genre-cards" id="genreCards">
-    <!-- JS or HTML will populate cards here -->
-  </div>
-  </section>
 
+    <script>
+        const apiKey = '648f188876674f7fae7a433413f688c6';
+        const alphabet = [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
+        const categories = ['Action', 'Indie', 'Strategy'];
+        
+        let categoryGames = {};
+        let selectedLetter = null;
+        let selectedCategory = null;
 
-  <!-- Game Grid -->
-  <main>
-    <section id="categoryGames" class="grid"></section>
-  </main>
+        window.addEventListener('DOMContentLoaded', () => {
+            initAlphabet();
+            initCategories();
+        });
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Maunick Games. All rights reserved.</p>
-    <p>All game data and images are provided by the RAWG Video Games Database API.<br>
-    This website is not affiliated with or endorsed by RAWG.</p>
-    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-  </footer>
+        // Initialize A-Z buttons
+        function initAlphabet() {
+            const container = document.getElementById('alphabet-container');
+            container.innerHTML = alphabet.map(letter => `
+                <button class="letter-button" id="letter-btn-${letter}" onclick="fetchGamesByLetter('${letter}')">
+                    <span class="letter-text">${letter}</span>
+                </button>
+            `).join('');
+        }
 
-  <script src="categories.js"></script>
-  <script>lucide.createIcons();</script>
+        // Initialize Categories and fetch random cover images
+        async function initCategories() {
+            const row = document.getElementById('category-row');
+            
+            // Render initial cards without images first
+            row.innerHTML = categories.map(cat => `
+                <div class="small-card" id="cat-card-${cat}" onclick="fetchGamesByCategory('${cat}')">
+                    <img id="cat-img-${cat}" class="small-image" src="" alt="${cat}" />
+                    <span class="small-card-text">${cat}</span>
+                </div>
+            `).join('');
+
+            // Fetch random game image for each category
+            categories.forEach(async (cat) => {
+                try {
+                    const res = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${cat.toLowerCase()}&page_size=10`);
+                    const data = await res.json();
+                    if (data.results && data.results.length > 0) {
+                        const randomGame = data.results[Math.floor(Math.random() * data.results.length)];
+                        categoryGames[cat] = randomGame;
+                        const imgEl = document.getElementById(`cat-img-${cat}`);
+                        if (imgEl && randomGame.background_image) {
+                            imgEl.src = randomGame.background_image;
+                        }
+                    }
+                } catch (err) {
+                    console.error(`Failed to fetch ${cat} games`, err);
+                }
+            });
+        }
+
+        // Fetch Games by Letter
+        async function fetchGamesByLetter(letter) {
+            selectedCategory = null;
+            selectedLetter = letter;
+            updateActiveStates();
+
+            const titleEl = document.getElementById('section-title');
+            const listEl = document.getElementById('games-list');
+
+            titleEl.textContent = `Games starting with "${letter}"`;
+            listEl.innerHTML = '<div class="placeholder-text">Loading games...</div>';
+
+            try {
+                const res = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${letter}&page_size=20`);
+                const data = await res.json();
+                renderGamesList(data.results);
+            } catch (err) {
+                console.error(err);
+                listEl.innerHTML = '<div class="placeholder-text">Failed to fetch games.</div>';
+            }
+        }
+
+        // Fetch Games by Category
+        async function fetchGamesByCategory(category) {
+            selectedLetter = null;
+            selectedCategory = category;
+            updateActiveStates();
+
+            const titleEl = document.getElementById('section-title');
+            const listEl = document.getElementById('games-list');
+
+            titleEl.textContent = `${category} Games`;
+            listEl.innerHTML = '<div class="placeholder-text">Loading games...</div>';
+
+            try {
+                const res = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=${category.toLowerCase()}&page_size=20`);
+                const data = await res.json();
+                renderGamesList(data.results);
+            } catch (err) {
+                console.error(err);
+                listEl.innerHTML = '<div class="placeholder-text">Failed to fetch games.</div>';
+            }
+        }
+
+        // Highlight active buttons/cards
+        function updateActiveStates() {
+            alphabet.forEach(letter => {
+                const btn = document.getElementById(`letter-btn-${letter}`);
+                if (btn) {
+                    if (letter === selectedLetter) btn.classList.add('active');
+                    else btn.classList.remove('active');
+                }
+            });
+
+            categories.forEach(cat => {
+                const card = document.getElementById(`cat-card-${cat}`);
+                if (card) {
+                    if (cat === selectedCategory) card.classList.add('active');
+                    else card.classList.remove('active');
+                }
+            });
+        }
+
+        // Render game results list
+        function renderGamesList(gamesList) {
+            const listEl = document.getElementById('games-list');
+            if (!gamesList || gamesList.length === 0) {
+                listEl.innerHTML = '<div class="placeholder-text">No games found.</div>';
+                return;
+            }
+
+            listEl.innerHTML = gamesList.map(item => `
+                <div class="vertical-card" onclick="goToDetail(${item.id})">
+                    <img src="${item.background_image || ''}" alt="${item.name}" class="vertical-image" />
+                    <div class="card-title">${item.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // Navigate to Game Detail page
+        function goToDetail(gameId) {
+            window.location.href = `game-detail.html?id=${gameId}`;
+        }
+    </script>
 </body>
 </html>

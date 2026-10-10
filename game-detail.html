@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="assets/logo2.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MAUNICK GAMES - Game Details</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* App Container */
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Back Button */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 16px;
+            background-color: #e91e63;
+            color: #fff;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .back-button:active {
+            transform: scale(0.9);
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-top: 20px;
+            padding-bottom: 40px;
+        }
+
+        /* Logo */
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: 150px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .game-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            margin: 10px 0 20px 0;
+        }
+
+        .cover-image {
+            width: 100%;
+            height: 220px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            background-color: #1f1f1f;
+        }
+
+        /* Info Boxes */
+        .info-boxes {
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            display: flex;
+            align-items: flex-start;
+            background-color: #1f1f1f;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+        }
+
+        .info-box i {
+            color: #e91e63;
+            margin-right: 10px;
+            margin-top: 2px;
+            font-size: 16px;
+            width: 18px;
+            text-align: center;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #fff;
+            margin-right: 6px;
+        }
+
+        .info-value {
+            flex: 1;
+            color: #ddd;
+            word-break: break-word;
+        }
+
+        .info-value.link {
+            color: #1e90ff;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Sections */
+        .section-title {
+            font-size: 18px;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 22px;
+            font-size: 14px;
+        }
+
+        /* Screenshots Carousel */
+        .screenshots-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            padding-bottom: 10px;
+            scrollbar-width: none; /* Firefox */
+        }
+
+        .screenshots-scroll::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .screenshot {
+            width: 160px;
+            height: 90px;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            flex-shrink: 0;
+            background-color: #1f1f1f;
+            transition: transform 0.2s;
+        }
+
+        .screenshot:active {
+            transform: scale(0.95);
+        }
+
+        /* Modal Image Viewer */
+        #image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .modal-image {
+            max-width: 90%;
+            max-height: 70%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 30px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #888;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        <!-- Back Button -->
+        <button class="back-button" onclick="goBack()">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+
+        <!-- Content Scroll Area -->
+        <div id="content-area" class="content-area">
+            <div class="loading-container">Loading game details...</div>
+        </div>
+    </div>
+
+    <!-- Modal for Image Preview -->
+    <div id="image-modal">
+        <button class="modal-close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+        <img id="modal-img-element" class="modal-image" src="" alt="Screenshot Preview" />
+    </div>
+
+    <script>
+        const apiKey = '648f188876674f7fae7a433413f688c6';
+
+        // Get gameId from URL query string (e.g. game-detail.html?id=3498)
+        const urlParams = new URLSearchParams(window.location.search);
+        const gameId = urlParams.get('id');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (!gameId) {
+                document.getElementById('content-area').innerHTML = '<div class="loading-container">No game specified.</div>';
+                return;
+            }
+            fetchGameDetails(gameId);
+        });
+
+        async function fetchGameDetails(id) {
+            try {
+                const [gameRes, ssRes] = await Promise.all([
+                    fetch(`https://api.rawg.io/api/games/${id}?key=${apiKey}`),
+                    fetch(`https://api.rawg.io/api/games/${id}/screenshots?key=${apiKey}`)
+                ]);
+
+                const game = await gameRes.json();
+                const ssData = await ssRes.json();
+                const screenshots = ssData.results ? ssData.results.slice(0, 5) : [];
+
+                renderGameDetails(game, screenshots);
+            } catch (error) {
+                console.error(error);
+                document.getElementById('content-area').innerHTML = '<div class="loading-container">Failed to load game details.</div>';
+            }
+        }
+
+        function renderGameDetails(game, screenshots) {
+            const container = document.getElementById('content-area');
+
+            const platforms = game.platforms ? game.platforms.map(p => p.platform.name).join(', ') : 'N/A';
+            const genres = game.genres ? game.genres.map(g => g.name).join(', ') : 'N/A';
+            const tags = game.tags ? game.tags.slice(0, 5).map(t => t.name).join(', ') : 'N/A';
+            const developers = game.developers ? game.developers.map(d => d.name).join(', ') : 'N/A';
+            const publishers = game.publishers ? game.publishers.map(p => p.name).join(', ') : 'N/A';
+
+            container.innerHTML = `
+                <!-- Logo -->
+                <div class="logo-wrapper">
+                    <img src="assets/logo1.png" alt="MAUNICK GAMES" class="logo" onerror="this.style.display='none';">
+                </div>
+
+                <!-- Title -->
+                <h1 class="game-title">${game.name || 'Game Details'}</h1>
+
+                <!-- Cover Image -->
+                <img src="${game.background_image || ''}" alt="${game.name}" class="cover-image" />
+
+                <!-- Info Boxes -->
+                <div class="info-boxes">
+                    <div class="info-box">
+                        <i class="fa-solid fa-star"></i>
+                        <span class="info-label">Rating:</span>
+                        <span class="info-value">${game.rating || 0} / ${game.rating_top || 5}</span>
+                    </div>
+                    <div class="info-box">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span class="info-label">Platforms:</span>
+                        <span class="info-value">${platforms}</span>
+                    </div>
+                    <div class="info-box">
+                        <i class="fa-solid fa-grip"></i>
+                        <span class="info-label">Genres:</span>
+                        <span class="info-value">${genres}</span>
+                    </div>
+                    <div class="info-box">
+                        <i class="fa-solid fa-tags"></i>
+                        <span class="info-label">Tags:</span>
+                        <span class="info-value">${tags}</span>
+                    </div>
+                    <div class="info-box">
+                        <i class="fa-solid fa-code"></i>
+                        <span class="info-label">Developers:</span>
+                        <span class="info-value">${developers}</span>
+                    </div>
+                    <div class="info-box">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="info-label">Publishers:</span>
+                        <span class="info-value">${publishers}</span>
+                    </div>
+                    ${game.website ? `
+                    <div class="info-box" onclick="window.open('${game.website}', '_blank')">
+                        <i class="fa-solid fa-globe"></i>
+                        <span class="info-label">Website:</span>
+                        <span class="info-value link">${game.website}</span>
+                    </div>` : ''}
+                </div>
+
+                <!-- Description -->
+                <h2 class="section-title">Description</h2>
+                <p class="description">${game.description_raw || 'No description available.'}</p>
+
+                <!-- Screenshots -->
+                <h2 class="section-title">Screenshots</h2>
+                <div class="screenshots-scroll">
+                    ${screenshots.map(ss => `
+                        <img src="${ss.image}" alt="Screenshot" class="screenshot" onclick="openModal('${ss.image}')" />
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        function openModal(imgSrc) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img-element');
+            modalImg.src = imgSrc;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="assets/logo2.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MAUNICK GAMES - Home</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #121212;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* App Container */
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Main Content Scroll Area */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-top: 20px;
+            padding-bottom: 90px; /* Leave space for bottom nav bar */
+        }
+
+        /* Logo Wrapper */
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: 150px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .home-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Search Box */
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: #1f1f1f;
+            border-radius: 10px;
+            padding: 0 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-icon {
+            color: #888;
+            margin-right: 8px;
+        }
+
+        .search-input {
+            flex: 1;
+            height: 45px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: #ccc;
+        }
+
+        /* Games Grid (2 columns) */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .game-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .game-card:active {
+            transform: scale(0.96);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background-color: #2a2a2a;
+        }
+
+        .card-title {
+            color: #fff;
+            font-size: 14px;
+            padding: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .loading-text, .error-text {
+            grid-column: span 2;
+            text-align: center;
+            color: #888;
+            padding: 20px;
+            font-size: 15px;
+        }
+
+        /* Bottom Navigation Bar (Matching Tab Navigator) */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: #0d0d0d;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #222;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #888;
+            flex: 1;
+            height: 100%;
+            transition: color 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+        }
+
+        .nav-item.active {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        <!-- Scrollable Content Area -->
+        <div class="content-area">
+            <!-- Logo -->
+            <div class="logo-wrapper">
+                <img src="assets/logo1.png" alt="MAUNICK GAMES" class="logo" onerror="this.style.display='none';">
+            </div>
+
+            <!-- Title -->
+            <h1 class="home-title">Discover Amazing Games</h1>
+
+            <!-- Search -->
+            <div class="search-box">
+                <i class="fa-solid fa-search search-icon"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Search games..." />
+            </div>
+
+            <!-- Games Grid -->
+            <div id="games-grid" class="games-grid">
+                <div class="loading-text">Loading action games...</div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="categories.html" class="nav-item">
+                <i class="fa-solid fa-grip"></i>
+                <span>Categories</span>
+            </a>
+            <a href="top-rated.html" class="nav-item">
+                <i class="fa-solid fa-star"></i>
+                <span>Top Rated</span>
+            </a>
+            <a href="upcoming.html" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Upcoming</span>
+            </a>
+            <a href="contact.html" class="nav-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        const apiKey = '648f188876674f7fae7a433413f688c6';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchActionGames();
+        });
+
+        // Fetch Action Games
+        async function fetchActionGames() {
+            const grid = document.getElementById('games-grid');
+            grid.innerHTML = '<div class="loading-text">Loading action games...</div>';
+            try {
+                const res = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&genres=action&page_size=12`);
+                const data = await res.json();
+                renderGames(data.results);
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = '<div class="error-text">Failed to load games. Check connection.</div>';
+            }
+        }
+
+        // Search Games
+        async function searchGames(query) {
+            if (!query.trim()) {
+                fetchActionGames();
+                return;
+            }
+            const grid = document.getElementById('games-grid');
+            grid.innerHTML = '<div class="loading-text">Searching games...</div>';
+            try {
+                const res = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&search=${encodeURIComponent(query)}&page_size=12`);
+                const data = await res.json();
+                renderGames(data.results);
+            } catch (error) {
+                console.error(error);
+                grid.innerHTML = '<div class="error-text">Search failed. Try again.</div>';
+            }
+        }
+
+        // Render Game Cards
+        function renderGames(gamesList) {
+            const grid = document.getElementById('games-grid');
+            if (!gamesList || gamesList.length === 0) {
+                grid.innerHTML = '<div class="error-text">No games found.</div>';
+                return;
+            }
+
+            grid.innerHTML = gamesList.map(item => `
+                <div class="game-card" onclick="goToDetail(${item.id})">
+                    <img src="${item.background_image || ''}" alt="${item.name}" class="card-image" />
+                    <div class="card-title">${item.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // Navigate to Game Detail page (we will create game-detail.html next)
+        function goToDetail(gameId) {
+            window.location.href = `game-detail.html?id=${gameId}`;
+        }
+
+        // Search input listener
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                searchGames(searchInput.value);
+                searchInput.blur();
+            }
+        });
+    </script>
+</body>
+</html>

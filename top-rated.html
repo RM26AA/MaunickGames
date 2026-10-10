@@ -1,47 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Top Rated Games</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://unpkg.com/lucide@latest"></script>
+
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="assets/logo2.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MAUNICK GAMES - Top Rated</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        /* App Container */
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* Content Scroll Area */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            padding-bottom: 90px; /* Space for bottom nav bar */
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            width: 170px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .title {
+            color: #fff;
+            font-size: 26px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Top Rated Games List */
+        .games-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card-container {
+            width: 100%;
+        }
+
+        .card {
+            background-color: #111;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.97);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #222;
+        }
+
+        .card-info {
+            padding: 10px;
+        }
+
+        .card-title {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rating {
+            color: #ffcc00;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        /* Loader & Error */
+        .loading-container {
+            text-align: center;
+            color: #aaa;
+            padding: 40px 0;
+            font-size: 16px;
+        }
+
+        .spinner {
+            font-size: 30px;
+            color: #fff;
+            margin-bottom: 12px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Bottom Navigation Bar */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background-color: #0d0d0d;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #222;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #888;
+            flex: 1;
+            height: 100%;
+            transition: color 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+        }
+
+        .nav-item.active {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <a href="index.html" class="logo-link">
-      <img src="logo1.png" alt="Maunick Games Logo" class="logo-img" />
-    </a>
-    <ul class="nav-links">
-      <li><i data-lucide="home"></i><a href="index.html">Home</a></li>
-      <li><i data-lucide="layout-grid"></i><a href="categories.html">Categories</a></li>
-      <li><i data-lucide="star"></i><a href="top-rated.html">Top Rated</a></li>
-      <li><i data-lucide="calendar-days"></i><a href="upcoming.html">Upcoming</a></li>
-      <li><i data-lucide="mail"></i><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
 
-  <!-- Page Header -->
-  <section class="hero">
-    <h1>Top Rated Games</h1>
-    <p>Explore the highest-rated games of all time</p>
-  </section>
+    <div id="app-container">
+        <!-- Content Scroll Area -->
+        <div class="content-area">
+            <!-- Header -->
+            <div class="header">
+                <img src="assets/logo1.png" alt="MAUNICK GAMES" class="logo" onerror="this.style.display='none';" />
+                <h1 class="title">Top Rated Games</h1>
+            </div>
 
-  <!-- Game Grid -->
-  <main>
-    <section id="topRatedGames" class="grid"></section>
-  </main>
+            <!-- Games Container / Loader -->
+            <div id="games-container" class="games-list">
+                <div class="loading-container">
+                    <i class="fa-solid fa-spinner spinner"></i>
+                    <div>Loading top rated games...</div>
+                </div>
+            </div>
+        </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 Maunick Games. All rights reserved.</p>
-    <p>All game data and images are provided by the RAWG Video Games Database API.<br>
-    This website is not affiliated with or endorsed by RAWG.</p>
-    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
-  </footer>
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav">
+            <a href="home.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a href="categories.html" class="nav-item">
+                <i class="fa-solid fa-grip"></i>
+                <span>Categories</span>
+            </a>
+            <a href="top-rated.html" class="nav-item active">
+                <i class="fa-solid fa-star"></i>
+                <span>Top Rated</span>
+            </a>
+            <a href="upcoming.html" class="nav-item">
+                <i class="fa-solid fa-calendar"></i>
+                <span>Upcoming</span>
+            </a>
+            <a href="contact.html" class="nav-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+        </nav>
+    </div>
 
-  <script src="top-rated.js"></script>
-  <script>lucide.createIcons();</script>
+    <script>
+        const apiKey = '648f188876674f7fae7a433413f688c6';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchTopRatedGames();
+        });
+
+        async function fetchTopRatedGames() {
+            const container = document.getElementById('games-container');
+            try {
+                const res = await fetch(`https://api.rawg.io/api/games?key=${apiKey}&ordering=-rating&page_size=20`);
+                const data = await res.json();
+                renderGames(data.results);
+            } catch (err) {
+                console.error('Failed to fetch top rated games:', err);
+                container.innerHTML = '<div class="loading-container">Failed to load top rated games. Check connection.</div>';
+            }
+        }
+
+        function renderGames(gamesList) {
+            const container = document.getElementById('games-container');
+            if (!gamesList || gamesList.length === 0) {
+                container.innerHTML = '<div class="loading-container">No top rated games found.</div>';
+                return;
+            }
+
+            container.innerHTML = gamesList.map(item => {
+                const ratingText = item.rating ? item.rating.toFixed(1) : 'N/A';
+                const bgImage = item.background_image || 'https://via.placeholder.com/400';
+                return `
+                    <div class="card-container">
+                        <div class="card" onclick="goToDetail(${item.id})">
+                            <img src="${bgImage}" alt="${item.name}" class="card-image" />
+                            <div class="card-info">
+                                <div class="card-title">${item.name}</div>
+                                <div class="rating">⭐ ${ratingText}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function goToDetail(gameId) {
+            window.location.href = `game-detail.html?id=${gameId}`;
+        }
+    </script>
 </body>
 </html>
